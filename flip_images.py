@@ -1,11 +1,18 @@
 from glob import glob
 from tqdm import tqdm
 import cv2
-
+import argparse
 from random import random
 
-flip_probability = 0.5
-base_path = "images"
+
+parser = argparse.ArgumentParser(description='Flip images in given directory and all its subdirectories.')
+parser.add_argument("--base_path", "-bp", help="Base path of images directory")
+parser.add_argument("--flip_probability", "-fp", type=float, help="Probability value for flipping images, must between 0 and 1")
+args = parser.parse_args()
+
+
+flip_probability = args.flip_probability
+base_path = args.base_path
 extentions = ['.png', '.jpg', '.jpeg']
 
 
@@ -14,7 +21,12 @@ for ext in extentions:
     print(f"Searching for {glob_query}")
 
     img_paths = glob(glob_query, recursive=True)
-    print(f"Found {len(img_paths)} images")
+    img_paths_len = len(img_paths)
+    
+    if(img_paths_len == 0):
+        continue
+
+    print(f"Found {img_paths_len} images")
 
     flip_counter = 0
     skip_counter = 0
