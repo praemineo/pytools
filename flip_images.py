@@ -5,9 +5,12 @@ import argparse
 from random import random
 
 
-parser = argparse.ArgumentParser(description='Flip images in given directory and all its subdirectories.')
-parser.add_argument("--base_path", "-bp", help="Base path of images directory")
-parser.add_argument("--flip_probability", "-fp", type=float, help="Probability value for flipping images, must between 0 and 1")
+parser = argparse.ArgumentParser(
+    description='Flip images in given directory and all its subdirectories.')
+parser.add_argument("--base_path", "-bp",
+                    help="Base path of images directory", required=True)
+parser.add_argument("--flip_probability", "--fp", type=float,
+                    help="Probability value for flipping images, must between 0 and 1", default=0.5)
 args = parser.parse_args()
 
 
@@ -22,7 +25,7 @@ for ext in extentions:
 
     img_paths = glob(glob_query, recursive=True)
     img_paths_len = len(img_paths)
-    
+
     if(img_paths_len == 0):
         continue
 
@@ -33,7 +36,7 @@ for ext in extentions:
 
     for img_path in tqdm(img_paths):
         # Randomness
-        if(flip_probability > random()):
+        if(random() > flip_probability):
             skip_counter += 1
             continue
 
